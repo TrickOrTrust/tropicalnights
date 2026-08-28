@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+  }
+
+  .ronde-knop {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7q_PzU2lL9Bt3czSKgA3hWmxLL1wet-oCpsWIwl5gNw&s=10");
+
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 8px solid white;
+
+    background-size: cover;
+    background-position: center;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 3px 10px black;
+
+    box-shadow:
+      0 0 20px rgba(255,255,255,0.5),
+      0 0 50px rgba(255,0,0,0.4);
+
+    transition: 0.15s;
+  }
+
+  .ronde-knop:hover {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 30px rgba(255,255,255,0.7),
+      0 0 70px rgba(255,0,0,0.7);
+  }
+
+  .ronde-knop:active {
+    transform: scale(0.95);
+  }
+</style>
+</head>
+
+<body>
+
+<button class="ronde-knop" onclick="speelGeluid()"></button>
+
+<audio id="rene">
+  <source
+    src="https://raw.githubusercontent.com/TrickOrTrust/reneleblanc/main/tropicalnights"
+    type="audio/mpeg">
+</audio>
+
+<script>
+function speelGeluid() {
+  const geluid = document.getElementById("rene");
+
+  // Maximaal HTML-volume
+  geluid.volume = 1.0;
+
+  // Begin opnieuw bij iedere klik
+  geluid.currentTime = 0;
+
+  // Afspelen
+  geluid.play();
+}
+</script>
+
+</body>
+</html>
