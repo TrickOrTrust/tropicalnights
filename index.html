@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
   body {
     margin: 0;
@@ -9,8 +12,16 @@
     justify-content: center;
     align-items: center;
     background: #111;
+    font-family: Arial, sans-serif;
   }
 
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* GROTE CIRKEL */
   .ronde-knop {
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7q_PzU2lL9Bt3czSKgA3hWmxLL1wet-oCpsWIwl5gNw&s=10");
 
@@ -43,6 +54,7 @@
 
   .ronde-knop:hover {
     transform: scale(1.05);
+
     box-shadow:
       0 0 30px rgba(255,255,255,0.7),
       0 0 70px rgba(255,0,0,0.7);
@@ -51,32 +63,169 @@
   .ronde-knop:active {
     transform: scale(0.95);
   }
+
+
+  /* BEDIENING */
+  .bediening {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    margin-top: 25px;
+  }
+
+  .bedien-knop {
+    width: 55px;
+    height: 55px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #222;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+  }
+
+  .bedien-knop:hover {
+    background: #333;
+    transform: scale(1.08);
+  }
+
+  .bedien-knop:active {
+    transform: scale(0.92);
+  }
+
+
+  /* MIDDELSTE KNOP */
+  .play-knop {
+    width: 70px;
+    height: 70px;
+
+    background: white;
+    color: black;
+
+    font-size: 30px;
+  }
+
+  .play-knop:hover {
+    background: #eee;
+  }
+
+
+  /* LINKER EN RECHTER KNOP ZIJN UITGESCHAKELD */
+  .uitgeschakeld {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  .uitgeschakeld:hover {
+    background: #222;
+    transform: none;
+  }
 </style>
 </head>
 
 <body>
 
-<button class="ronde-knop" onclick="speelGeluid()"></button>
+<div class="container">
 
+  <!-- GROTE CIRKEL -->
+  <button class="ronde-knop" onclick="speelGeluid()"></button>
+
+
+  <!-- SPOTIFY-ACHTIGE BEDIENING -->
+  <div class="bediening">
+
+    <!-- TERUG - WERKT NIET -->
+    <button class="bedien-knop uitgeschakeld">
+      ⏮
+    </button>
+
+
+    <!-- START / STOP - WERKT WEL -->
+    <button
+      id="playKnop"
+      class="bedien-knop play-knop"
+      onclick="toggleGeluid()">
+      ▶
+    </button>
+
+
+    <!-- VOLGENDE - WERKT NIET -->
+    <button class="bedien-knop uitgeschakeld">
+      ⏭
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- GELUID -->
 <audio id="rene">
   <source
     src="https://raw.githubusercontent.com/TrickOrTrust/reneleblanc/main/tropicalnights"
     type="audio/mpeg">
 </audio>
 
-<script>
-function speelGeluid() {
-  const geluid = document.getElementById("rene");
 
-  // Maximaal HTML-volume
+<script>
+
+const geluid = document.getElementById("rene");
+const playKnop = document.getElementById("playKnop");
+
+
+/* Grote cirkel */
+function speelGeluid() {
+
   geluid.volume = 1.0;
 
-  // Begin opnieuw bij iedere klik
   geluid.currentTime = 0;
 
-  // Afspelen
   geluid.play();
+
+  playKnop.innerHTML = "⏸";
 }
+
+
+/* Middelste knop: START / STOP */
+function toggleGeluid() {
+
+  geluid.volume = 1.0;
+
+  if (geluid.paused) {
+
+    geluid.play();
+
+  playKnop.innerHTML = "⏸";
+
+  } else {
+
+    geluid.pause();
+
+    playKnop.innerHTML = "▶";
+
+  }
+}
+
+
+/* Als het nummer vanzelf afgelopen is */
+geluid.addEventListener("ended", function() {
+
+  playKnop.innerHTML = "▶";
+
+});
+
 </script>
 
 </body>
